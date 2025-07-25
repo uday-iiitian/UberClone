@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: false
+        select: false // Do not return password in queries
     },
     socketId: {
         type: String
