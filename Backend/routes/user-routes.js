@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
 const userController = require('../controllers/user-controller');
+const authMiddleware = require('../middlewares/auth-middleware');
 
 router.get('/register', (req, res) => {
     res.send('User routes are working');
@@ -21,6 +22,13 @@ router.post('/login', [
     ],
     userController.loginUser
 );
+
+router.get('/profile', authMiddleware.authUser ,userController.getUser);
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('token');
+    res.status(200).json({ message: 'Logged out successfully' });
+});
 
 module.exports = router;
 
